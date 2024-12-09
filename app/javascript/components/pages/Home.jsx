@@ -4,6 +4,8 @@ import LoginForm from "../LoginForm";
 
 const Home = () => {
   return <LoginForm />;
-  //   <SignUpForm />
+  // <SignUpForm />;
+//   <LoginForm />;
+    
 };
 export default Home;
