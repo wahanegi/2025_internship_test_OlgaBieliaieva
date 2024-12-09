@@ -1,7 +1,9 @@
 import React from "react";
 import SignUpForm from "../SignUpForm";
+import LoginForm from "../LoginForm";
 
 const Home = () => {
-  return <SignUpForm />;
+  return <LoginForm />;
+  //   <SignUpForm />
 };
 export default Home;
