@@ -9,10 +9,10 @@ axios.defaults.headers.common["X-CSRF-Token"] =
   document.querySelector("[name=csrf-token]").content;
 
 const validationSchema = Yup.object().shape({
-  //   name: Yup.string()
-  //     .min(3, "Name must be at least 3 characters")
-  //     .max(20, "Name must be no more 20 characters")
-  //     .required("Name is required"),
+  name: Yup.string()
+    .min(3, "Name must be at least 3 characters")
+    .max(20, "Name must be no more 20 characters")
+    .required("Name is required"),
   email: Yup.string().email("It's not email").required("Email is required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues = {
-  //   name: "",
+  name: "",
   email: "",
   password: "",
   passwordConfirm: "",
@@ -31,11 +31,12 @@ let initialValues = {
 
 const SignUpForm = () => {
   const handleSubmit = async (
-    { email, password, passwordConfirm },
+    { name, email, password, passwordConfirm },
     { resetForm }
   ) => {
     const response = await axios.post(`${API_URL}`, {
       user: {
+        name,
         email,
         password,
         password_confirmation: passwordConfirm,
@@ -60,6 +61,21 @@ const SignUpForm = () => {
             noValidate
             onSubmit={handleSubmit}
           >
+            <FormGroup controlId="name" className="w-100">
+              <FormControl
+                type="text"
+                name="name"
+                value={values.name}
+                className="form-control w-100 rounded-pill"
+                placeholder="Name"
+                isInvalid={!!errors.name}
+                isValid={touched.name && !errors.name}
+                onChange={handleChange}
+              />
+              <FormControl.Feedback type="invalid">
+                {errors.name}
+              </FormControl.Feedback>
+            </FormGroup>
             <FormGroup controlId="email" className="w-100">
               <FormControl
                 type="email"
