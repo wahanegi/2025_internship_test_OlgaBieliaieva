@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import SignUpForm from "../SignUpForm";
 
-const Home = () => (
-<h1>I am Home page</h1>
-)
+const Home = () => {
+  return <SignUpForm />;
+};
 export default Home;
