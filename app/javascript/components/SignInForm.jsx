@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Form, FormGroup, FormControl, Toast } from "react-bootstrap";
+import React from "react";
+import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-
-const API_URL = "/users";
-axios.defaults.headers.common["X-CSRF-Token"] =
-  document.querySelector("[name=csrf-token]").content;
+import authService from "../services/authService";
+import { PrimaryButtonReverse } from "./Buttons";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("It's not email").required("Email is required"),
@@ -20,27 +17,22 @@ let initialValues = {
   password: "",
 };
 
-const LoginForm = () => {
+const SignInForm = ({ onClose }) => {
   const handleSubmit = async ({ email, password }, { resetForm }) => {
-    const response = await axios.post(`${API_URL}/sign_in`, {
-      user: { email, password },
-    });
-    console.log(response.data);
-
-    return response.data;
-  };
-
-  const handleLogout = async () => {
-    await axios.delete(`${API_URL}/sign_out`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Auth Logout");
+    try {
+      const data = await authService.login(email, password);
+      resetForm();
+      onClose();
+      // add notification and redirect
+    } catch (error) {
+      console.log(error);
+      // add notification
+      resetForm();
+    }
   };
 
   return (
-    <section className="p-5">
+    <>
       <Formik
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -48,7 +40,7 @@ const LoginForm = () => {
       >
         {({ handleSubmit, handleChange, values, touched, errors }) => (
           <Form
-            id="login-form"
+            id="sign-up-form"
             className="d-flex flex-column align-items-center justify-content-center gap-3 w-100"
             noValidate
             onSubmit={handleSubmit}
@@ -84,18 +76,11 @@ const LoginForm = () => {
               </FormControl.Feedback>
             </FormGroup>
 
-            <button type="button" onClick={handleSubmit}>
-              Log in
-            </button>
-            <button type="button" onClick={handleLogout}>
-              Log out
-            </button>
-
-            {/* <SubmitFormButton type="submit" text="Create" /> */}
+            <PrimaryButtonReverse type="submit" text="Sign in" />
           </Form>
         )}
       </Formik>
-    </section>
+    </>
   );
 };
-export default LoginForm;
+export default SignInForm;

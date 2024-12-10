@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Form, FormGroup, FormControl, Toast } from "react-bootstrap";
+import React from "react";
+import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-
-const API_URL = "/users";
-axios.defaults.headers.common["X-CSRF-Token"] =
-  document.querySelector("[name=csrf-token]").content;
+import authService from "../services/authService";
+import { PrimaryButton } from "./Buttons";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters")
     .max(20, "Name must be no more 20 characters")
     .required("Name is required"),
-  email: Yup.string().email("It's not email").required("Email is required"),
+  email: Yup.string()
+    .email("Must be a valid email address")
+    .required("Email is required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
@@ -34,21 +33,31 @@ const SignUpForm = () => {
     { name, email, password, passwordConfirm },
     { resetForm }
   ) => {
-    const response = await axios.post(`${API_URL}`, {
-      user: {
+    if (
+      name.trim().length === 0 ||
+      email.trim().length === 0 ||
+      password.trim().length === 0
+    ) {
+      return; // add notification
+    }
+    try {
+      const data = await authService.register(
         name,
         email,
         password,
-        password_confirmation: passwordConfirm,
-      },
-    });
-    console.log(response.data);
-
-    return response.data;
+        passwordConfirm
+      );
+      resetForm(); // add notification and redirect
+    } catch (error) {
+      console.log(error);
+      
+      // add notification
+      resetForm();
+    }
   };
 
   return (
-    <section className="p-5">
+    <div className="p-1 w-100">
       <Formik
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -122,15 +131,12 @@ const SignUpForm = () => {
                 {errors.passwordConfirm}
               </FormControl.Feedback>
             </FormGroup>
-            <button type="button" onClick={handleSubmit}>
-              Sign up
-            </button>
 
-            {/* <SubmitFormButton type="submit" text="Create" /> */}
+            <PrimaryButton type="submit" text="Sign up" />
           </Form>
         )}
       </Formik>
-    </section>
+    </div>
   );
 };
 export default SignUpForm;
