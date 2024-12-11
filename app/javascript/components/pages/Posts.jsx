@@ -5,13 +5,10 @@ import { PrimaryButtonReverse } from "../Buttons";
 
 const Posts = () => {
   const { user, setUser } = useContext(UserContext);
-  console.log(user);
 
   const handleSignOut = async () => {
     try {
       const response = await authService.logout();
-      console.log(response);
-
       setUser(null);
     } catch {
       (err) => console.log(err);

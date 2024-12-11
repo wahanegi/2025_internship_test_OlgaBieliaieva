@@ -9,9 +9,8 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  console.log(user);
 
-  useEffect(() => {    
+  useEffect(() => {
     axios
       .get("/api/v1/users/current_user", { withCredentials: true })
       .then((response) => {

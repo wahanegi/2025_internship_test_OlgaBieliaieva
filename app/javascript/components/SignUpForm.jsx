@@ -1,26 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { redirect } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
+import { UserContext } from "./userContext";
 import * as Yup from "yup";
 import authService from "../services/authService";
 import { PrimaryButton } from "./Buttons";
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Name must be at least 3 characters")
-    .max(20, "Name must be no more 20 characters")
-    .required("Name is required"),
-  email: Yup.string()
-    .email("Must be a valid email address")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
-  passwordConfirm: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Password confirmation is required"),
-});
 
 let initialValues = {
   name: "",
@@ -30,7 +15,7 @@ let initialValues = {
 };
 
 const SignUpForm = () => {
-  
+  const { setUser } = useContext(UserContext);
   const handleSubmit = async (
     { name, email, password, passwordConfirm },
     { resetForm }
@@ -51,7 +36,7 @@ const SignUpForm = () => {
       );
       resetForm();
       setUser(data.user);
-      redirect("/posts"); // add notification and redirect
+      redirect("/posts"); // add notification
     } catch (error) {
       console.log(error);
 
@@ -62,11 +47,7 @@ const SignUpForm = () => {
 
   return (
     <div className="p-1 w-100">
-      <Formik
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-      >
+      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {({ handleSubmit, handleChange, values, touched, errors }) => (
           <Form
             id="sign-up-form"
