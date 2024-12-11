@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { UserContext } from "./userContext";
 import authService from "../services/authService";
 import { PrimaryButtonReverse } from "./Buttons";

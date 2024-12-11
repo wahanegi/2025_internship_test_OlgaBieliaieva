@@ -3,7 +3,6 @@ import { redirect } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
 import { UserContext } from "./userContext";
-import * as Yup from "yup";
 import authService from "../services/authService";
 import { PrimaryButton } from "./Buttons";
 
