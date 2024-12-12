@@ -13,7 +13,7 @@ const Home = () => {
   };
   const closeSignInModal = () => setIsSignIn(false);
   return (
-    <main className="vw-100 min-vh-100 p-5 d-flex flex-column align-items-center justify-content-center bg-primary">
+    <main className="max-vw-100 min-vh-100 p-5 d-flex flex-column align-items-center justify-content-center bg-primary">
       <div className="container container-fluid row h-100 align-items-center justify-content-center p-0">
         <section className="col-sm-12 col-md-6 col-lg-6 col-xl-6 container container-fluid h-100 d-flex flex-column align-items-center justify-content-center p-2 gap-2">
           <GoCommentDiscussion
