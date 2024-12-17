@@ -1,4 +1,5 @@
 import React from "react";
+import { redirect } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -29,6 +30,7 @@ let initialValues = {
 };
 
 const SignUpForm = () => {
+  
   const handleSubmit = async (
     { name, email, password, passwordConfirm },
     { resetForm }
@@ -47,10 +49,12 @@ const SignUpForm = () => {
         password,
         passwordConfirm
       );
-      resetForm(); // add notification and redirect
+      resetForm();
+      setUser(data.user);
+      redirect("/posts"); // add notification and redirect
     } catch (error) {
       console.log(error);
-      
+
       // add notification
       resetForm();
     }

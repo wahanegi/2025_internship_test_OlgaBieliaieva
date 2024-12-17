@@ -7,9 +7,11 @@ axios.defaults.headers.common["X-CSRF-Token"] =
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+  console.log(user);
 
-  useEffect(() => {
+  useEffect(() => {    
     axios
       .get("/api/v1/users/current_user", { withCredentials: true })
       .then((response) => {
@@ -17,8 +19,13 @@ export const UserProvider = ({ children }) => {
       })
       .catch(() => {
         setUser(null);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
-  return <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

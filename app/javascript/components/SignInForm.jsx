@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { UserContext } from "../userContext";
 import authService from "../services/authService";
 import { PrimaryButtonReverse } from "./Buttons";
 
@@ -18,11 +20,17 @@ let initialValues = {
 };
 
 const SignInForm = ({ onClose }) => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate()
   const handleSubmit = async ({ email, password }, { resetForm }) => {
     try {
       const data = await authService.login(email, password);
+
+      setUser(data.user);
       resetForm();
       onClose();
+      navigate("/posts");
+
       // add notification and redirect
     } catch (error) {
       console.log(error);
