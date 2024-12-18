@@ -3,9 +3,9 @@ class Api::V1::UsersController < ApplicationController
 
   def current
     if current_user
-      render json: { user: current_user }
+      render json: { user: current_user }, status: :ok
     else
-      render json: { redirect_to: "/" }, status: :unauthorized
+      render json: { error: "Unauthorized", message: "You need to log in" }, status: :unauthorized
     end
   end
 end
