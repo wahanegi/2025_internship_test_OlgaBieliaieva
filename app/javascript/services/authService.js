@@ -29,7 +29,6 @@ const logout = async () => {
       "Content-Type": "application/json",
     },
   });
-  console.log("Auth Logout");
 };
 
 export default { register, login, logout };

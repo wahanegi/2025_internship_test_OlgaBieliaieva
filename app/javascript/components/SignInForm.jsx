@@ -2,17 +2,9 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { Formik } from "formik";
-import * as Yup from "yup";
-import { UserContext } from "../userContext";
+import { UserContext } from "./userContext";
 import authService from "../services/authService";
 import { PrimaryButtonReverse } from "./Buttons";
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email("It's not email").required("Email is required"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
-});
 
 let initialValues = {
   email: "",
@@ -21,7 +13,7 @@ let initialValues = {
 
 const SignInForm = ({ onClose }) => {
   const { setUser } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async ({ email, password }, { resetForm }) => {
     try {
       const data = await authService.login(email, password);
@@ -31,7 +23,7 @@ const SignInForm = ({ onClose }) => {
       onClose();
       navigate("/posts");
 
-      // add notification and redirect
+      // add notification
     } catch (error) {
       console.log(error);
       // add notification
@@ -41,11 +33,7 @@ const SignInForm = ({ onClose }) => {
 
   return (
     <>
-      <Formik
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-      >
+      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {({ handleSubmit, handleChange, values, touched, errors }) => (
           <Form
             id="sign-up-form"
