@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
-      render json: { message: "Account created successfully", user: { id: resource.id, email: resource.email, name: resource.name } }, status: :created
+      render json: { message: "Account created successfully", user: { id: resource.id, email: resource.email, name: resource.name, nickname: resource.nickname } }, status: :created
     else
       render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
     end
@@ -54,7 +54,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :nickname ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
