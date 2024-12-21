@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: false },
             format: { with: URI::MailTo::EMAIL_REGEXP, message: "Must be a valid email address" }
+
   validates :name, presence: true, length: { minimum: 3, maximum: 20 }
   validates :nickname, presence: true, uniqueness: true
 
@@ -36,4 +37,5 @@ class User < ApplicationRecord
 
     nickname
   end
+
 end
