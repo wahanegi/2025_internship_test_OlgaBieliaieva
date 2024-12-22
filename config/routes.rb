@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "posts/index"
+      post "posts/create"
       get "users/current_user", to: "users#current"
     end
   end

@@ -9,7 +9,11 @@ class Users::SessionsController < Devise::SessionsController
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
-      render json: { message: "Logged in successfully", user: resource }, status: :ok
+      render json: { message: "Logged in successfully", user: { id: resource.id,
+      email: resource.email,
+      name: resource.name,
+      nickname: resource.nickname,
+      confirmed: resource.confirmed? } }, status: :ok
     else
       render json: { error: "Login failed" }, status: :unauthorized
     end

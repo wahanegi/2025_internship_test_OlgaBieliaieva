@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../userContext";
 import authService from "../../services/authService";
 import { PrimaryButtonReverse } from "../Buttons";
+import Header from "../Header";
 
 const Posts = () => {
   const { user, setUser } = useContext(UserContext);
@@ -20,6 +21,7 @@ const Posts = () => {
   }
   return (
     <>
+      <Header />
       <p className="m-0">{`Welcome, ${user.name}`}</p>
       <PrimaryButtonReverse text="Log out" action={handleSignOut} />
     </>
