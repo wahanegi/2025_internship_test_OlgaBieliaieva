@@ -37,5 +37,4 @@ class User < ApplicationRecord
 
     nickname
   end
-
 end
