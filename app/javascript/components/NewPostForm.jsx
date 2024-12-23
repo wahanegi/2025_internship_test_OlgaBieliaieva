@@ -63,8 +63,8 @@ const NewPostForm = ({ onClose }) => {
                     alt={imagePreview.name}
                     style={{
                       width: "100%",
-                      maxHeight: 400,
                       objectFit: "cover",
+                      aspectRatio: "16 / 9",
                     }}
                   />
                 </div>
@@ -73,10 +73,9 @@ const NewPostForm = ({ onClose }) => {
                   className="w-100 container container-fluid d-flex flex-column align-items-center justify-content-center overflow-hidden px-0 py-4 m-0 border border-secondary-subtle"
                   style={{
                     width: "100%",
-                    maxHeight: 400,
                     borderRadius: 30,
                     cursor: "pointer",
-                    aspectRatio: "4 / 3",
+                    aspectRatio: "16 / 9",
                   }}
                   onClick={handleImageClick}
                 >
