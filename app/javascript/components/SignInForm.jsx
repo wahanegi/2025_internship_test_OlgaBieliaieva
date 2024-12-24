@@ -17,7 +17,6 @@ const SignInForm = ({ onClose }) => {
   const handleSubmit = async ({ email, password }, { resetForm }) => {
     try {
       const data = await authService.login(email, password);
-
       setUser(data.user);
       resetForm();
       onClose();
@@ -36,7 +35,7 @@ const SignInForm = ({ onClose }) => {
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {({ handleSubmit, handleChange, values, touched, errors }) => (
           <Form
-            id="sign-up-form"
+            id="sign-in-form"
             className="d-flex flex-column align-items-center justify-content-center gap-3 w-100"
             noValidate
             onSubmit={handleSubmit}

@@ -9,7 +9,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
-      render json: { message: "Account created successfully", user: { id: resource.id, email: resource.email, name: resource.name, nickname: resource.nickname } }, status: :created
+      render json: { message: "Account created successfully",
+                     user: { id: resource.id, email: resource.email, name: resource.name,
+                             nickname: resource.nickname, confirmed: resource.confirmed? } },
+                     status: :created
     else
       render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
     end

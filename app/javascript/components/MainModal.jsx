@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 
 const MainModal = ({ isOpen, onClose, children }) => {
   return ReactDOM.createPortal(
-    <Modal show={isOpen} onHide={onClose}>
+    <Modal show={isOpen} onHide={onClose} scrollable={true}>
       {children}
     </Modal>,
     document.getElementById("modal")
