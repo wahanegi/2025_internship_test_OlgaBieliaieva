@@ -95,6 +95,7 @@ const SignUpForm = () => {
                 isInvalid={!!errors.password}
                 onChange={handleChange}
               />
+              <p className="text-light mb-0" style={{fontSize:11, marginLeft: 16 }}>Password must be at lest 8 characters</p>
               <FormControl.Feedback type="invalid">
                 {errors.password}
               </FormControl.Feedback>

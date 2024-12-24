@@ -1,9 +1,9 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_confirmation, only: [ :create, :update, :destroy ]
+  before_action :check_confirmation, only: [ :create ]
   def index
     posts = Post.all.order(created_at: :desc)
-    render json: posts
+  render json: posts.as_json(include: { user: { only: [ :id, :name, :nickname ] } })
   end
 
   def create

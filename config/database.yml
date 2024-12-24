@@ -87,17 +87,17 @@ production:
   primary: &primary_production
     <<: *default
     database: <%= ENV["DB_NAME"] %>_production
-    username: my_app
+    username: <%= ENV["DB_USERNAME"] %>
     password: <%= ENV["MY_APP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: my_app_production_cache
+    database: <%= ENV["DB_NAME"] %>_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: my_app_production_queue
+    database: <%= ENV["DB_NAME"] %>_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: my_app_production_cable
+    database: <%= ENV["DB_NAME"] %>_production_cable
     migrations_paths: db/cable_migrate

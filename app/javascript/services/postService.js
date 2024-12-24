@@ -11,4 +11,10 @@ const create = async (formData) => {
   });
   return response.data;
 };
-export default {create}
+
+const fetch = async () => {
+  const response = await axios.get(`${API_URL}/index`);
+
+  return response.data;
+};
+export default { create, fetch };
